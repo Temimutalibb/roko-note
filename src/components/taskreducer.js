@@ -17,6 +17,13 @@ export function tasksReducer(tasks, action) {
     case "pin": {
       return tasks.map((t) => {
         if (t.id === action.id) {
+          if (t.pin === "pin") {
+            delete t.pin;
+            return { ...t };
+          }
+        }
+
+        if (t.id === action.id) {
           return { ...t, pin: "pin" };
         }
         return t;

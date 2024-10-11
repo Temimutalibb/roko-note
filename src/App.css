@@ -46,7 +46,7 @@ body {
   border-bottom: 2px solid #ccc;
   outline: none;
   background-color: transparent;
-  cursor: default;
+  cursor: pointer;
 }
 
 /* Input label */
@@ -92,7 +92,7 @@ body {
   width: 90%;
   padding: 10px;
   background-color: transparent;
-  cursor: default;
+  cursor: pointer;
   font-size: 15px;
 }
 .textarea-field:focus {

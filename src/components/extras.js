@@ -9,6 +9,8 @@ export function a11yProps(index) {
 }
 
 export const Item = styled(Paper)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
   backgroundColor: "#fff",
   fontSize: "50px",
   ...theme.typography.body2,
