@@ -1,64 +1,49 @@
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import axios from "axios";
 import * as React from "react";
 import { useEffect, useMemo, useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ShortUniqueId from "short-unique-id";
+import Header from "./header";
 import Note from "./note";
 
 import { tasksReducer } from "./taskreducer";
 
-export default function DashBoard() {
+export default function Guess() {
   const [startNote, setStartNote] = useState(true);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [value, setValue] = useState(null);
   const [items, setitem] = useState([]);
   const [tab, dispatch] = useReducer(tasksReducer, []);
+  const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
 
-  const email = localStorage.getItem("email");
-  //to get the localstorage one time incase usere switched from guess
+  //this is to check one if the guess has saved story
   useEffect(() => {
-    const savedItems = localStorage.getItem("tab");
-    if (savedItems) {
-      const savedItemsJson = JSON.parse(savedItems);
+    if (!login) {
+      const savedItems = localStorage.getItem("tab");
+      const savedItemsJson = savedItems ? JSON.parse(savedItems) : [];
+      console.log("fecthing dta", savedItemsJson);
       tab.push(...savedItemsJson);
+      setitem("checking");
     }
-  }, []);
+    setLogin(true);
+  }, [items]);
 
-  //to save tab and avoid duplicate
+  //to save the tab and avoid duplicate
   const storageItem = useMemo(() => {
     return tab;
   }, [tab]);
 
-  //to call the database once and get the data
-  useEffect(() => {
-    axios
-      .post("http://localhost:4000/getdata", {
-        email: email,
-      })
-      .then((response) => tab.push(...response.data))
-      .catch((error) => console.error("Error fetching tasks:", error));
-  }, []);
-
-  //to save to the local storage as a backup
+  //to save the story to the local storage
   useEffect(() => {
     localStorage.setItem("tab", JSON.stringify(storageItem));
     console.log("setting the data", JSON.stringify(storageItem));
   }, [storageItem]);
 
-  //save to the database each time time changes
-  useEffect(() => {
-    axios
-      .post("http://localhost:4000/savenote", {
-        tab: storageItem,
-        email: email,
-      })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error("Error sending data:", error));
-  }, [storageItem, email]);
-
+  //to generate a random number for the id
   const { randomUUID } = new ShortUniqueId({
     dictionary: "number",
   });
@@ -129,8 +114,19 @@ export default function DashBoard() {
     }
   });
 
+  //to logout and delate all stories
+  const logout = () => {
+    localStorage.removeItem("tab");
+    navigate("/");
+  };
+
+  const loginUser = () => {
+    navigate("/");
+  };
+
   return (
     <>
+      <Header profile={"you're a guess"} logout={logout} login={loginUser} />
       {startNote && (
         <Note
           onTitleChange={onTitleChange}

@@ -1,12 +1,62 @@
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserForm } from "./authenticate";
+import AuthenticateUser from "./authenticateuser";
+import { ItemHome } from "./extras";
 
 export default function Home() {
   const [formDisplay, setFormDisplay] = useState(false);
+  const [authorized, setAuthorized] = useState("loading");
+
+  //get the token, if exist login user
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("http://localhost:4000/protected", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          const email = response.data.user.email;
+          setAuthorized("authorized");
+        })
+        .catch((error) => {
+          setAuthorized("notauthorized");
+          console.error("Error accessing protected route:", error);
+        });
+    } else {
+      setAuthorized("notauthorized");
+    }
+  }, []);
+
+  //skeleton to display while the authenticated is loading
+  if (authorized === "loading") {
+    return (
+      <>
+        <Stack spacing={1}>
+          <Skeleton variant="text" sx={{ fontSize: "5rem" }} />
+          <Skeleton variant="rectangular" height={200} />
+          <Skeleton variant="rounded" height={200} />
+        </Stack>
+      </>
+    );
+  }
+
+  //for authenticate user
+  if (authorized === "authorized") {
+    return (
+      <>
+        <AuthenticateUser />
+      </>
+    );
+  }
+
   return (
     <>
       <div
@@ -42,15 +92,15 @@ export default function Home() {
             overflowY: "hidden",
           }}
         >
-          <Item>signin with google</Item>
-          <Item>sign in with facebook</Item>
-          <Item>signin with github</Item>
-          <Item onClick={() => setFormDisplay(!formDisplay)}>
+          <ItemHome>signin with google</ItemHome>
+          <ItemHome>sign in with facebook</ItemHome>
+          <ItemHome>signin with github</ItemHome>
+          <ItemHome onClick={() => setFormDisplay(!formDisplay)}>
             {" "}
             continue with email
-          </Item>
-          <Link to="/dashboard" style={{ textDecoration: "none" }}>
-            <Item> continue as guess</Item>
+          </ItemHome>
+          <Link to="/guess" style={{ textDecoration: "none" }}>
+            <ItemHome> continue as guess</ItemHome>
           </Link>
         </Box>
 
@@ -61,22 +111,3 @@ export default function Home() {
     </>
   );
 }
-
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  textAlign: "center",
-  boxShadow: "0px 0px 1px 1px",
-  fontSize: "1rem",
-  color: theme.palette.text.secondary,
-  height: 60,
-  lineHeight: "60px",
-  width: "11rem",
-  margin: "auto",
-  cursor: "default",
-  "&:hover": {
-    backgroundColor: "bieseg", // Example hover effect
-    opacity: 0.7,
-    cursor: "pointer",
-    boxShadow: "1px 1px 3px 1px",
-  },
-}));

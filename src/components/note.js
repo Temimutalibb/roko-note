@@ -48,6 +48,7 @@ export default function Note({
             marginTop: "7rem",
             boxShadow: "0px 0px 0px 2px",
             backgroundColor: "inherit",
+            zIndex: -1,
           },
         }}
         noValidate

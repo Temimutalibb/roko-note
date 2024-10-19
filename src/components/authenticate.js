@@ -5,9 +5,12 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthenticateUser from "./authenticateuser";
 
 export function UserForm({ formDisplay }) {
   const [email, setEmail] = useState("");
+  const [authenticateUser, setAuthenticateUser] = useState(false);
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("signup/login");
@@ -17,6 +20,7 @@ export function UserForm({ formDisplay }) {
   const handlePasswordChamge = (event) => {
     setPassword(event.target.value);
   };
+  const navigate = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -55,8 +59,9 @@ export function UserForm({ formDisplay }) {
         const data = response.data;
         setMessage(data.message);
         localStorage.setItem("token", response.data.token);
-        console.log(response.data.token);
+        localStorage.setItem("email", response.data.email);
         setSubmitting(false);
+        setAuthenticateUser(true);
       })
       .catch((error) => {
         if (error.response) {
@@ -68,6 +73,10 @@ export function UserForm({ formDisplay }) {
         console.error("There was an error", error);
       });
   };
+
+  if (authenticateUser) {
+    return <AuthenticateUser />;
+  }
 
   return (
     <fragment>
