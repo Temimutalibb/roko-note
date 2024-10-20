@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { server } from "../App";
 import AuthenticateUser from "./authenticateuser";
 
 export function UserForm({ formDisplay }) {
@@ -27,7 +28,7 @@ export function UserForm({ formDisplay }) {
     setMessage("submiting...");
     setSubmitting(true);
     axios
-      .post("http://localhost:4000/signup", {
+      .post(`${server}signup`, {
         email: email,
         password: password,
       })
@@ -51,7 +52,7 @@ export function UserForm({ formDisplay }) {
     setMessage("submiting...");
     setSubmitting(true);
     axios
-      .post("http://localhost:4000/login", {
+      .post(`${server}login`, {
         email: email,
         password: password,
       })

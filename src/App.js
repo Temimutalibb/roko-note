@@ -3,6 +3,7 @@ import "./App.css";
 import Guess from "./components/guess";
 import Home from "./components/home";
 
+export const server = "https://rokoserver.vercel.app/";
 function App() {
   return (
     <>

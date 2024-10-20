@@ -63,7 +63,14 @@ export default function Header({ profile, logout, login }) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, marginBottom: "2rem", zIndex: 100 }}>
+    <Box
+      style={{
+        flexGrow: 1,
+        marginBottom: "2rem",
+        zIndex: 1000,
+        position: "fixed",
+      }}
+    >
       <ThemeProvider theme={theme}>
         <AppBar position="fixed">
           <Toolbar>

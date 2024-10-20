@@ -5,6 +5,7 @@ import axios from "axios";
 import * as React from "react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import ShortUniqueId from "short-unique-id";
+import { server } from "../App";
 import Note from "./note";
 
 import { tasksReducer } from "./taskreducer";
@@ -35,7 +36,7 @@ export default function DashBoard() {
   //to call the database once and get the data
   useEffect(() => {
     axios
-      .post("http://localhost:4000/getdata", {
+      .post(`${server}getdata`, {
         email: email,
       })
       .then((response) => tab.push(...response.data))
@@ -51,7 +52,7 @@ export default function DashBoard() {
   //save to the database each time time changes
   useEffect(() => {
     axios
-      .post("http://localhost:4000/savenote", {
+      .post(`${server}savenote`, {
         tab: storageItem,
         email: email,
       })

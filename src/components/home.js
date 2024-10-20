@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { server } from "../App";
 import { UserForm } from "./authenticate";
 import AuthenticateUser from "./authenticateuser";
 import { ItemHome } from "./extras";
@@ -17,7 +18,7 @@ export default function Home() {
     const token = localStorage.getItem("token");
     if (token) {
       axios
-        .get("http://localhost:4000/protected", {
+        .get(`${server}protected`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
