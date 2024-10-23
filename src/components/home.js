@@ -36,6 +36,19 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("https://rokoserver.vercel.app/test")
+      .then((response) => {
+        const email = response.data.message;
+        alert(email);
+      })
+      .catch((error) => {
+        setAuthorized("notauthorized");
+        console.error("Error accessing protected route:", error);
+      });
+  }, []);
+
   //skeleton to display while the authenticated is loading
   if (authorized === "loading") {
     return (
