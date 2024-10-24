@@ -4,6 +4,7 @@ import Guess from "./components/guess";
 import Home from "./components/home";
 
 export const server = "https://rokoserver.vercel.app/";
+//for developing mode
 export const backendServer = "http://localhost:4000";
 function App() {
   return (
@@ -16,11 +17,6 @@ function App() {
       </Router>
     </>
   );
-  //home page
-  /* if (authorized === "notauthorized") {
-    return <>{routes}</>;
-  }
-    */
 }
 
 export default App;

@@ -1,11 +1,11 @@
 import CloseIcon from "@mui/icons-material/Close";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Button, Fab, FormControl } from "@mui/material";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { server } from "../App";
 import AuthenticateUser from "./authenticateuser";
 
@@ -21,7 +21,6 @@ export function UserForm({ formDisplay }) {
   const handlePasswordChamge = (event) => {
     setPassword(event.target.value);
   };
-  const navigate = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -82,7 +81,7 @@ export function UserForm({ formDisplay }) {
   return (
     <fragment>
       <FormControl>
-        <box
+        <Box
           style={{
             padding: "2rem",
             margin: "2rem",
@@ -116,7 +115,7 @@ export function UserForm({ formDisplay }) {
             value={email}
             name="email"
             required
-            id="outlined-password-input"
+            id="outlined-email-input"
             label="Email"
             type="email"
             variant="filled"
@@ -167,7 +166,7 @@ export function UserForm({ formDisplay }) {
           ) : (
             ""
           )}
-        </box>
+        </Box>
       </FormControl>
     </fragment>
   );
