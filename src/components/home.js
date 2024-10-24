@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { server } from "../App";
 import { UserForm } from "./authenticate";
-import AuthenticateUser from "./authenticateuser";
 import { ItemHome } from "./extras";
 
 export default function Home() {
   const [formDisplay, setFormDisplay] = useState(false);
   const [authorized, setAuthorized] = useState("loading");
+  const [message, setmessage] = useState("");
 
   //get the token, if exist login user
   useEffect(() => {
@@ -36,19 +36,6 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("https://rokoserver.vercel.app/test")
-      .then((response) => {
-        const email = response.data.message;
-        alert(email);
-      })
-      .catch((error) => {
-        setAuthorized("notauthorized");
-        console.error("Error accessing protected route:", error);
-      });
-  }, []);
-
   //skeleton to display while the authenticated is loading
   if (authorized === "loading") {
     return (
@@ -64,15 +51,34 @@ export default function Home() {
 
   //for authenticate user
   if (authorized === "authorized") {
-    return (
+    /*return (
       <>
         <AuthenticateUser />
       </>
-    );
+    );*/
   }
+
+  const handleTest = () => {
+    axios
+      .get(`${server}test`)
+      .then((response) => {
+        if (response) {
+          console.log("reponse");
+          alert(response.data.message);
+        } else {
+          console.log("no response");
+          alert("norespons");
+        }
+        setmessage(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error accessing protected route:", error);
+      });
+  };
 
   return (
     <>
+      {message ? message : "loading"}
       <div
         style={{
           padding: "2rem",
@@ -106,7 +112,7 @@ export default function Home() {
             overflowY: "hidden",
           }}
         >
-          <ItemHome>signin with google</ItemHome>
+          <ItemHome onClick={handleTest}>signin with google</ItemHome>
           <ItemHome>sign in with facebook</ItemHome>
           <ItemHome>signin with github</ItemHome>
           <ItemHome onClick={() => setFormDisplay(!formDisplay)}>

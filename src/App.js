@@ -4,6 +4,7 @@ import Guess from "./components/guess";
 import Home from "./components/home";
 
 export const server = "https://rokoserver.vercel.app/";
+export const backendServer = "http://localhost:4000";
 function App() {
   return (
     <>
