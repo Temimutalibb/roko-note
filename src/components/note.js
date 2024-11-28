@@ -1,3 +1,4 @@
+import EditIcon from "@mui/icons-material/Edit";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import RsvpIcon from "@mui/icons-material/Rsvp";
 import ShareIcon from "@mui/icons-material/Share";
@@ -5,6 +6,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Fab from "@mui/material/Fab";
 import * as React from "react";
 import {
   BlogItButton,
@@ -34,72 +36,76 @@ export default function Note({
   handleDelete,
   handleEdit,
   handlePin,
+  startNote,
+  setStartNote,
 }) {
   return (
     <>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": {
-            m: 1,
-            width: "40ch",
-            margin: "auto",
-            alignItems: "center",
-            marginTop: "7rem",
-            boxShadow: "0px 0px 0px 2px",
-            backgroundColor: "inherit",
-            zIndex: -1,
-          },
-        }}
-        noValidate
-      >
-        <Card sx={{ minWidth: 375 }}>
-          <CardContent>
-            <div className="input-container">
-              <input
-                onChange={onTitleChange}
-                value={title}
-                placeholder="title"
-                className="input-field"
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    console.log("Enter key pressed");
-                  }
-                }}
-                type="text"
-              />
-              <label for="input-field" class="input-label"></label>
-              <span className="input-highlight"></span>
-            </div>
-            <textarea
-              onChange={onNoteChange}
-              value={note}
-              className="textarea-field"
-              placeholder="Note"
-              rows="20"
-              cols="40"
-            ></textarea>
-          </CardContent>
+      {startNote && (
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": {
+              m: 1,
+              width: "80%",
+              margin: "auto",
+              alignItems: "center",
+              marginTop: "7rem",
+              boxShadow: "0px 0px 0px 2px",
+              backgroundColor: "inherit",
+              zIndex: -1,
+            },
+          }}
+          noValidate
+        >
+          <Card sx={{ minWidth: 375 }}>
+            <CardContent>
+              <div className="input-container">
+                <input
+                  onChange={onTitleChange}
+                  value={title}
+                  placeholder="title"
+                  className="input-field"
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      console.log("Enter key pressed");
+                    }
+                  }}
+                  type="text"
+                />
+                <label for="input-field" class="input-label"></label>
+                <span className="input-highlight"></span>
+              </div>
 
-          <CardActions>
-            <SaveButton onclick={handleClick} />
-            <InviteButton>
-              <RsvpIcon />
-              invite
-            </InviteButton>
-            <BlogItButton />
-            <ShareButton
-              articleTitle={note}
-              articleUrl={title ? title : "chect this out"}
-            >
-              <ShareIcon />
-              Share
-            </ShareButton>
-          </CardActions>
-        </Card>
-      </Box>
+              <textarea
+                onChange={onNoteChange}
+                value={note}
+                className="textarea-field"
+                placeholder="Note"
+                rows="20"
+                cols="40"
+              ></textarea>
+            </CardContent>
 
+            <CardActions>
+              <SaveButton onclick={handleClick} />
+              <InviteButton>
+                <RsvpIcon />
+                invite
+              </InviteButton>
+              <BlogItButton />
+              <ShareButton
+                articleTitle={note}
+                articleUrl={title ? title : "chect this out"}
+              >
+                <ShareIcon />
+                Share
+              </ShareButton>
+            </CardActions>
+          </Card>
+        </Box>
+      )}
       <Box
         sx={{
           flexGrow: 1,
@@ -167,6 +173,14 @@ export default function Note({
             </div>
           ))}
         </Box>
+      </Box>
+      <Box
+        onClick={() => setStartNote(!startNote)}
+        sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
+      >
+        <Fab aria-label="edit">
+          <EditIcon />
+        </Fab>
       </Box>
     </>
   );

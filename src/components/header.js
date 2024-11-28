@@ -11,9 +11,15 @@ import { ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { Search, SearchIconWrapper, StyledInputBase, theme } from "./extras";
+import {
+  darkTheme,
+  lightTheme,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "./extras";
 
-export default function Header({ profile, logout, login }) {
+export default function Header({ profile, logout, login, loginText }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [themeMode, setThemeMode] = useState(false);
@@ -23,7 +29,6 @@ export default function Header({ profile, logout, login }) {
     const bodyStyle = document.body.style;
     bodyStyle.backgroundColor = themeMode ? "grey" : "#eceff1";
     bodyStyle.color = "black";
-    // Add more styles
   }, [themeMode]);
 
   const handleProfileMenuOpen = (event) => {
@@ -57,7 +62,7 @@ export default function Header({ profile, logout, login }) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>{profile}</MenuItem>
-      <MenuItem onClick={login}>login</MenuItem>
+      <MenuItem onClick={login}>{loginText}</MenuItem>
       <MenuItem onClick={logout}>logout</MenuItem>
     </Menu>
   );
@@ -71,7 +76,7 @@ export default function Header({ profile, logout, login }) {
         position: "fixed",
       }}
     >
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeMode ? darkTheme : lightTheme}>
         <AppBar position="fixed">
           <Toolbar>
             <Typography

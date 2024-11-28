@@ -66,14 +66,29 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-//for header
-export const theme = createTheme({
+//for header theme
+export const darkTheme = createTheme({
   components: {
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: "inherit", // Custom color "#eceff1"
+          backgroundColor: "grey", // Custom color "#eceff1"
           color: "inherit", //"black",
+          opacity: 1,
+        },
+      },
+    },
+  },
+});
+
+export const lightTheme = createTheme({
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: "rgba(236, 239, 241, 0.9)", // Custom color "#eceff1"
+          color: "inherit", //"black",
+          opacity: 1,
         },
       },
     },

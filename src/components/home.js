@@ -60,55 +60,78 @@ export default function Home() {
 
   return (
     <>
-      <div
-        style={{
-          padding: "2rem",
-          borderRadius: 2,
-          backgroundColor: "white",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          margin: "auto",
-          width: "20rem",
-          justifyContent: "center" /* Center horizontally */,
-          alignItems: "center" /* Center vertically */,
-          marginTop: "2rem",
-          height: "auto",
-          maxHeight: "30rem",
-          marginBottom: "2rem",
-        }}
-      >
-        <Box
-          sx={{
-            p: 2,
-            borderRadius: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            margin: "auto",
-            marginTop: "2rem",
-            width: "20rem",
-            justifyContent: "center" /* Center horizontally */,
-            alignItems: "center" /* Center vertically */,
-            overflowY: "hidden",
-          }}
-        >
-          <ItemHome>signin with google</ItemHome>
-          <ItemHome>sign in with facebook</ItemHome>
-          <ItemHome>signin with github</ItemHome>
-          <ItemHome onClick={() => setFormDisplay(!formDisplay)}>
-            {" "}
-            continue with email
-          </ItemHome>
-          <Link to="/guess" style={{ textDecoration: "none" }}>
-            <ItemHome> continue as guess</ItemHome>
-          </Link>
-        </Box>
+      <div style={styles.body}>
+        <div style={styles.bodyDiv}>
+          <Box
+            sx={{
+              p: 2,
+              borderRadius: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              margin: "auto",
+              marginTop: "2rem",
+              width: "20rem",
+              justifyContent: "center" /* Center horizontally */,
+              alignItems: "center" /* Center vertically */,
+              overflowY: "hidden",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "Sixtyfour Convergence",
+                fontWeight: 400,
+                fontStyle: "normal",
+              }}
+            >
+              roko Note
+            </div>
+            <ItemHome>signin with google</ItemHome>
+            <ItemHome>sign in with facebook</ItemHome>
+            <ItemHome>signin with github</ItemHome>
+            <ItemHome onClick={() => setFormDisplay(!formDisplay)}>
+              {" "}
+              continue with email
+            </ItemHome>
+            <Link to="/guest" style={{ textDecoration: "none" }}>
+              <ItemHome> continue as guest</ItemHome>
+            </Link>
+          </Box>
 
-        {formDisplay && (
-          <UserForm formDisplay={() => setFormDisplay(!formDisplay)} />
-        )}
+          {formDisplay && (
+            <UserForm formDisplay={() => setFormDisplay(!formDisplay)} />
+          )}
+        </div>
       </div>
     </>
   );
 }
+
+const styles = {
+  body: {
+    backgroundImage:
+      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><text x='0' y='20' font-size='20' fill='gray' fill-opacity='0.4'>roko</text></svg>\")",
+    backgroundRepeat: "repeat",
+    zIndex: -1,
+    backgroundSize: "auto",
+    margin: 0,
+    padding: 0,
+    fontFamily: "Doto",
+  },
+  bodyDiv: {
+    padding: "2rem",
+    borderRadius: 2,
+    backgroundColor: "white",
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+    margin: "auto",
+    width: "20rem",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "2rem",
+    height: "auto",
+    maxHeight: "30rem",
+    marginBottom: "2rem",
+  },
+};

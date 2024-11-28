@@ -1,6 +1,3 @@
-import EditIcon from "@mui/icons-material/Edit";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
 import * as React from "react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +8,6 @@ import Note from "./note";
 import { tasksReducer } from "./taskreducer";
 
 export default function Guess() {
-  const [startNote, setStartNote] = useState(true);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [value, setValue] = useState(null);
@@ -19,6 +15,7 @@ export default function Guess() {
   const [tab, dispatch] = useReducer(tasksReducer, []);
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
+  const [startNote, setStartNote] = useState(true);
 
   //this is to check one if the guess has saved story
   useEffect(() => {
@@ -82,6 +79,7 @@ export default function Guess() {
     const noteMap = tabFilter.map((t) => t.note);
     setTitle(titleMap);
     setNote(noteMap);
+    setStartNote(true);
     dispatch({
       type: "delete",
       id: id,
@@ -126,32 +124,29 @@ export default function Guess() {
 
   return (
     <>
-      <Header profile={"you're a guess"} logout={logout} login={loginUser} />
-      {startNote && (
-        <Note
-          onTitleChange={onTitleChange}
-          title={title}
-          onNoteChange={onNoteChange}
-          note={note}
-          handleClick={handleClick}
-          handleChange={handleChange}
-          value={value}
-          sortTab={sortTab}
-          tab={tab}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          handlePin={handlePin}
-        />
-      )}
+      <Header
+        profile={"You're a guest"}
+        loginText={"login"}
+        logout={logout}
+        login={loginUser}
+      />
 
-      <Box
-        onClick={() => setStartNote(!startNote)}
-        sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
-      >
-        <Fab aria-label="edit">
-          <EditIcon />
-        </Fab>
-      </Box>
+      <Note
+        onTitleChange={onTitleChange}
+        title={title}
+        onNoteChange={onNoteChange}
+        note={note}
+        handleClick={handleClick}
+        handleChange={handleChange}
+        value={value}
+        sortTab={sortTab}
+        tab={tab}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        handlePin={handlePin}
+        startNote={startNote}
+        setStartNote={setStartNote}
+      />
     </>
   );
 }
