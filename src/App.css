@@ -89,6 +89,7 @@ body {
   background-color: transparent;
   cursor: pointer;
   font-size: 15px;
+  font-family: "Courier New", Courier, monospace;
 }
 .textarea-field:focus {
   border: 1px solid blue;

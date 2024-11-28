@@ -1,6 +1,3 @@
-import EditIcon from "@mui/icons-material/Edit";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
 import axios from "axios";
 import * as React from "react";
 import { useEffect, useMemo, useReducer, useState } from "react";
@@ -132,31 +129,22 @@ export default function DashBoard() {
 
   return (
     <>
-      {startNote && (
-        <Note
-          onTitleChange={onTitleChange}
-          title={title}
-          onNoteChange={onNoteChange}
-          note={note}
-          handleClick={handleClick}
-          handleChange={handleChange}
-          value={value}
-          sortTab={sortTab}
-          tab={tab}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          handlePin={handlePin}
-        />
-      )}
-
-      <Box
-        onClick={() => setStartNote(!startNote)}
-        sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
-      >
-        <Fab aria-label="edit">
-          <EditIcon />
-        </Fab>
-      </Box>
+      <Note
+        onTitleChange={onTitleChange}
+        title={title}
+        onNoteChange={onNoteChange}
+        note={note}
+        handleClick={handleClick}
+        handleChange={handleChange}
+        value={value}
+        sortTab={sortTab}
+        tab={tab}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        handlePin={handlePin}
+        startNote={startNote}
+        setStartNote={setStartNote}
+      />
     </>
   );
 }
