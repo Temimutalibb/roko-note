@@ -1,13 +1,14 @@
-import PushPinIcon from "@mui/icons-material/PushPin";
 import RsvpIcon from "@mui/icons-material/Rsvp";
-import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
+import "draft-js/dist/Draft.css";
+//import HTMLParser from "html-react-parser";
+import PushPinIcon from "@mui/icons-material/PushPin";
+import { Stack } from "@mui/material";
 import { stateToHTML } from "draft-js-export-html";
 import "draft-js/dist/Draft.css";
 import HTMLParser from "html-react-parser";
-import * as React from "react";
-import { useEffect, useMemo, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useNavigate } from "react-router-dom";
 import ShortUniqueId from "short-unique-id";
@@ -17,7 +18,7 @@ import Header from "./header";
 import Note from "./note";
 import { tasksReducer } from "./taskreducer";
 
-export default function Guess() {
+export default function MyEditor() {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState(() => EditorState.createEmpty());
   const [items, setitem] = useState([]);

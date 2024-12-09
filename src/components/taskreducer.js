@@ -1,5 +1,7 @@
 export function tasksReducer(tasks, action) {
   switch (action.type) {
+    case "SET_TAB":
+      return [...tasks, ...action.payload];
     case "added": {
       return [
         ...tasks,

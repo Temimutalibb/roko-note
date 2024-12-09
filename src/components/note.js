@@ -1,5 +1,4 @@
 import EditIcon from "@mui/icons-material/Edit";
-import PushPinIcon from "@mui/icons-material/PushPin";
 import RsvpIcon from "@mui/icons-material/Rsvp";
 import ShareIcon from "@mui/icons-material/Share";
 import Box from "@mui/material/Box";
@@ -7,35 +6,24 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
-import * as React from "react";
-import {
-  BlogItButton,
-  DeleteButton,
-  EditButton,
-  InviteButton,
-  PinButton,
-  SaveButton,
-  ShareButton,
-} from "./buttons";
-import { a11yProps, Item } from "./extras";
-
-import { Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import "draft-js/dist/Draft.css";
+import * as React from "react";
+import { Editor } from "react-draft-wysiwyg";
+import { BlogItButton, InviteButton, SaveButton, ShareButton } from "./buttons";
+import { a11yProps } from "./extras";
 
 export default function Note({
   onTitleChange,
   title,
-  onNoteChange,
   note,
+  setNote,
   handleClick,
-  handleChange,
   value,
+  handleChange,
   sortTab,
-  tab,
-  handleDelete,
-  handleEdit,
-  handlePin,
+  tabNote,
   startNote,
   setStartNote,
 }) {
@@ -77,15 +65,16 @@ export default function Note({
                 <label for="input-field" class="input-label"></label>
                 <span className="input-highlight"></span>
               </div>
-
-              <textarea
-                onChange={onNoteChange}
-                value={note}
-                className="textarea-field"
-                placeholder="Note"
-                rows="20"
-                cols="40"
-              ></textarea>
+              <div className="editor-container">
+                <Editor
+                  placeholder="Note here"
+                  editorState={note} //{editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={setNote} //{setEditorState}
+                />
+              </div>
             </CardContent>
 
             <CardActions>
@@ -141,38 +130,7 @@ export default function Note({
           ))}
         </Tabs>
 
-        <Box sx={{ width: "70%", m: "9px" }}>
-          {tab.map((l) => (
-            <div
-              key={l.id}
-              role="tabpanel"
-              hidden={value !== l.id}
-              id={`vertical-tabpanel-${l.id}`}
-              aria-labelledby={`vertical-tab-${l.id}`}
-            >
-              <Box sx={{ width: "100%" }}>
-                <Stack spacing={2}>
-                  {value === l.id && (
-                    <>
-                      <Item>
-                        {l.note}
-                        <span style={{ width: "1rem" }}>
-                          {l.pin ? <PushPinIcon /> : ""}
-                        </span>
-                      </Item>
-                    </>
-                  )}
-                </Stack>
-              </Box>
-              <EditButton handleEdit={() => handleEdit(l.id)} />
-              <InviteButton>
-                <RsvpIcon />
-              </InviteButton>
-              <DeleteButton handleDelete={() => handleDelete(l.id)} />
-              <PinButton handlePin={() => handlePin(l.id)} />
-            </div>
-          ))}
-        </Box>
+        <Box sx={{ width: "70%", m: "9px" }}>{tabNote}</Box>
       </Box>
       <Box
         onClick={() => setStartNote(!startNote)}

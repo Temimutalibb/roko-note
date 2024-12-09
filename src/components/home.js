@@ -117,6 +117,7 @@ const styles = {
     margin: 0,
     padding: 0,
     fontFamily: "Doto",
+    height: "100%",
   },
   bodyDiv: {
     padding: "2rem",
