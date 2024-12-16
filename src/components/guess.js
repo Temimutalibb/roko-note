@@ -11,6 +11,7 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useNavigate } from "react-router-dom";
 import ShortUniqueId from "short-unique-id";
+import { BlogitModal } from "./blogit";
 import { DeleteButton, EditButton, InviteButton, PinButton } from "./buttons";
 import { Item } from "./extras";
 import Header from "./header";
@@ -26,6 +27,8 @@ export default function Guess() {
   const [value, setValue] = useState(null);
   const [startNote, setStartNote] = useState(true);
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => setOpen(false);
 
   //this is to check if the guess has saved story
   useEffect(() => {
@@ -201,6 +204,17 @@ export default function Guess() {
     navigate("/");
   };
 
+  //modal for blogit
+
+  //for blogit
+  const handleBlogIT = (e) => {
+    e.preventDefault();
+    if (isContentEmpty() || title === "") {
+      alert("field cannot be empty");
+      return;
+    }
+    setOpen(true);
+  };
   return (
     <>
       <Header
@@ -222,6 +236,14 @@ export default function Guess() {
         tabNote={tabNote}
         startNote={startNote}
         setStartNote={setStartNote}
+        handleBlogIT={handleBlogIT}
+      />
+
+      <BlogitModal
+        open={open}
+        handleClose={handleClose}
+        title={title}
+        content={getTextFromEditorState(note)}
       />
     </>
   );

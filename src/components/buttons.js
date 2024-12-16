@@ -73,33 +73,7 @@ export function InviteButton({ children }) {
 }
 
 //button for blogit
-export function BlogItButton() {
-  const [open, setOpen] = useState(false);
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const handleBlogIT = () => {
-    setOpen(true);
-  };
-
-  const action = (
-    <fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </fragment>
-  );
-
+export function BlogItButton({ handleBlogIT }) {
   return (
     <>
       <Button onClick={handleBlogIT}>
@@ -107,13 +81,6 @@ export function BlogItButton() {
           <RssFeedIcon />
         </Fab>
       </Button>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="coming soon"
-        action={action}
-      />
     </>
   );
 }

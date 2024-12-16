@@ -26,6 +26,7 @@ export default function Note({
   tabNote,
   startNote,
   setStartNote,
+  handleBlogIT,
 }) {
   return (
     <>
@@ -83,7 +84,7 @@ export default function Note({
                 <RsvpIcon />
                 invite
               </InviteButton>
-              <BlogItButton />
+              <BlogItButton handleBlogIT={handleBlogIT} />
               <ShareButton
                 articleTitle={note}
                 articleUrl={title ? title : "chect this out"}
