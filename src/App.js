@@ -4,9 +4,10 @@ import Guess from "./components/guess";
 import Home from "./components/home";
 import MyEditor from "./components/test";
 
-export const server = "https://rokoserver.vercel.app/";
+//export const server = "https://rokoserver.vercel.app/";
 //for developing mode
-export const backendServer = "http://localhost:4000";
+export const backendServer = "http://localhost:4000/";
+export const server = "https://rokoserver.vercel.app/";
 function App() {
   return (
     <>

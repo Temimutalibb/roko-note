@@ -156,8 +156,8 @@ export default function Guess() {
 
   const handleEdit = (id) => {
     const tabFilter = tab.filter((l) => l.id === id);
-    const titleMap = tabFilter.map((t) => t.title);
-    const noteMap = tabFilter.map((t) => t.note);
+    const titleMap = tabFilter[0].title; //tabFilter.map((t) => t.title);
+    const noteMap = tabFilter[0].note; //tabFilter.map((t) => t.note);
     setTitle(titleMap);
     displayReturn(noteMap);
     setStartNote(true);

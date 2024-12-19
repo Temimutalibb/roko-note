@@ -74,6 +74,9 @@ export default function Note({
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={setNote} //{setEditorState}
+                  wrapperStyle={styles.wrapperStyle}
+                  editorStyle={styles.editorStyle}
+                  toolbarStyle={styles.toolbarStyle}
                 />
               </div>
             </CardContent>
@@ -144,3 +147,27 @@ export default function Note({
     </>
   );
 }
+
+const styles = {
+  editorWrapper: {
+    position: "relative",
+  },
+  wrapperStyle: {
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    padding: "10px",
+  },
+  editorStyle: {
+    maxHeight: "300px", // Set a fixed height for the editor
+    overflowY: "auto", // Enable scrolling for long content
+    padding: "10px",
+    backgroundColor: "#f9f9f9",
+  },
+  toolbarStyle: {
+    position: "sticky", // Makes the toolbar stick at the top of the editor container
+    top: 0, // Keeps it pinned to the top
+    zIndex: 100, // Ensures it stays above the editor content
+    backgroundColor: "#fff", // Prevents overlap issues
+    borderBottom: "1px solid #ccc",
+  },
+};

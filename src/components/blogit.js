@@ -171,6 +171,10 @@ export function BlogitModal({ open, handleClose, title, content }) {
                         <MenuItem value={"Programming"}>Programming</MenuItem>
                         <MenuItem value={"Web_3"}>Web 3.0</MenuItem>
                         <MenuItem value={"Crypto"}>Crypto</MenuItem>
+                        <MenuItem value={"Life_style"}>Life-style</MenuItem>
+                        <MenuItem value={"Inspiration"}>Inspiration</MenuItem>
+                        <MenuItem value={"Poem"}>Poem</MenuItem>
+                        <MenuItem value={"Quote"}>Quote</MenuItem>
                         <MenuItem value={"Tech"}>Tech</MenuItem>
                         <MenuItem value={"Spiritual"}>Spiritual</MenuItem>
                         <MenuItem value={"Others"}>Others</MenuItem>
