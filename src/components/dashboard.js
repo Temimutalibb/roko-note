@@ -123,7 +123,7 @@ export default function DashBoard() {
           {value === l.id && (
             <>
               <Item>
-                {HTMLParser(convertToHtml(l.note))}
+                <span>{HTMLParser(convertToHtml(l.note))}</span>
                 <span style={{ width: "1rem" }}>
                   {l.pin ? <PushPinIcon /> : ""}
                 </span>
