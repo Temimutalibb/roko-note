@@ -87,7 +87,7 @@ export function UserForm({ formDisplay }) {
             margin: "2rem",
             boxShadow: "1px 1px 2px 1px ",
             justifyContent: "center",
-            position: "relative",
+            backgroundColor: "white",
           }}
         >
           <Fab
