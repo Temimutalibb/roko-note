@@ -3,16 +3,15 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { server } from "../App";
 import { UserForm } from "./authenticate";
-import AuthenticateUser from "./authenticateuser";
 import { ItemHome } from "./extras";
 
 export default function Home() {
   const [formDisplay, setFormDisplay] = useState(false);
-  const [authorized, setAuthorized] = useState("loading");
-
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   //get the token, if exist login user
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,19 +24,20 @@ export default function Home() {
         })
         .then((response) => {
           const email = response.data.user.email;
-          setAuthorized("authorized");
+          navigate("/authorized");
+          setLoading(false);
         })
         .catch((error) => {
-          setAuthorized("notauthorized");
-          console.error("Error accessing protected route:", error);
+          console.error("There was an error", error);
+          setLoading(false);
         });
     } else {
-      setAuthorized("notauthorized");
+      setLoading(false);
     }
   }, []);
 
   //skeleton to display while the authenticated is loading
-  if (authorized === "loading") {
+  if (loading) {
     return (
       <>
         <Stack spacing={1}>
@@ -45,15 +45,6 @@ export default function Home() {
           <Skeleton variant="rectangular" height={200} />
           <Skeleton variant="rounded" height={200} />
         </Stack>
-      </>
-    );
-  }
-
-  //for authenticate user
-  if (authorized === "authorized") {
-    return (
-      <>
-        <AuthenticateUser />
       </>
     );
   }
@@ -86,11 +77,7 @@ export default function Home() {
           >
             roko Note
           </div>
-          <ItemHome>signin with google</ItemHome>
-          <ItemHome>sign in with facebook</ItemHome>
-          <ItemHome>signin with github</ItemHome>
           <ItemHome onClick={() => setFormDisplay(!formDisplay)}>
-            {" "}
             continue with email
           </ItemHome>
           <Link to="/guest" style={{ textDecoration: "none" }}>
@@ -118,8 +105,11 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
+    flexDirection: "column",
+    flexwrap: "wrap",
     margin: 0,
     padding: 0,
+    gap: 0,
   },
   bodyDiv: {
     backgroundColor: "blue",

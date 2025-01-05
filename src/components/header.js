@@ -11,6 +11,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   darkTheme,
   lightTheme,
@@ -85,7 +86,9 @@ export default function Header({ profile, logout, login, loginText }) {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              ROKO
+              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
+                ROKO
+              </Link>
             </Typography>
             <Search>
               <SearchIconWrapper>

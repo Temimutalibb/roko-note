@@ -12,6 +12,9 @@ export default function AuthenticateUser() {
   };
 
   const profile = localStorage.getItem("email");
+  if (!profile) {
+    navigate("/");
+  }
 
   return (
     <>

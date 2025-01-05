@@ -27,8 +27,10 @@ export default function Guess() {
   const [value, setValue] = useState(null);
   const [startNote, setStartNote] = useState(true);
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [inviteOpen, setInviteOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const handleInviteClose = () => setInviteOpen(false);
 
   //this is to check if the guess has saved story
   useEffect(() => {
@@ -127,7 +129,11 @@ export default function Guess() {
         </Stack>
       </Box>
       <EditButton handleEdit={() => handleEdit(l.id)} />
-      <InviteButton>
+      <InviteButton
+        handleInvite={() =>
+          alert("This is only available for registered users")
+        }
+      >
         <RsvpIcon />
       </InviteButton>
       <DeleteButton handleDelete={() => handleDelete(l.id)} />
@@ -215,6 +221,7 @@ export default function Guess() {
     }
     setOpen(true);
   };
+
   return (
     <>
       <Header

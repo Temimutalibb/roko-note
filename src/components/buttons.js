@@ -1,13 +1,11 @@
-import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
+import RsvpIcon from "@mui/icons-material/Rsvp";
 import SaveIcon from "@mui/icons-material/Save";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
-import IconButton from "@mui/material/IconButton";
-import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import { useState } from "react";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -27,47 +25,14 @@ export function SaveButton({ onclick }) {
 }
 
 //Button fot invite
-export function InviteButton({ children }) {
-  const [open, setOpen] = useState(false);
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const handleBlogIT = () => {
-    setOpen(true);
-  };
-
-  const action = (
-    <fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </fragment>
-  );
-
+export function InviteButton({ handleInvite }) {
   return (
     <>
-      <Button onClick={handleBlogIT}>
-        <Fab variant="extended" title="blogIT" size="small" aria-label="like">
-          {children}
+      <Button onClick={handleInvite}>
+        <Fab variant="extended" title="invite" size="small" aria-label="like">
+          <RsvpIcon />
         </Fab>
       </Button>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="Coming soon"
-        action={action}
-      />
     </>
   );
 }

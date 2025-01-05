@@ -1,23 +1,22 @@
-import axios from "axios";
-import * as React from "react";
-import { useMemo, useReducer, useState } from "react";
-import ShortUniqueId from "short-unique-id";
-import { server } from "../App";
-import { BlogitModal } from "./blogit";
-import Note from "./note";
-
 import PushPinIcon from "@mui/icons-material/PushPin";
-import RsvpIcon from "@mui/icons-material/Rsvp";
 import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
+import axios from "axios";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import "draft-js/dist/Draft.css";
 import HTMLParser from "html-react-parser";
-import { useEffect } from "react";
+import * as React from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ShortUniqueId from "short-unique-id";
+import { server } from "../App";
+import { BlogitModal } from "./blogit";
 import { DeleteButton, EditButton, InviteButton, PinButton } from "./buttons";
 import { Item } from "./extras";
+import { InviteModal } from "./invite";
+
+import Note from "./note";
 import { tasksReducer } from "./taskreducer";
 
 export default function DashBoard() {
@@ -26,9 +25,13 @@ export default function DashBoard() {
   const [tab, dispatch] = useReducer(tasksReducer, []);
   const [value, setValue] = useState(null);
   const [startNote, setStartNote] = useState(true);
-
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const handleInviteClose = () => setInviteOpen(false);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const [allowEdit, setAllowEdit] = useState("yes");
+  const [ID, setID] = useState();
+  const [linkDisplay, setLinkDisplay] = useState(true);
 
   const email = localStorage.getItem("email");
 
@@ -110,35 +113,69 @@ export default function DashBoard() {
     setNote(newEditorState);
   };
 
+  const handleInviteSubmit = () => {
+    if (inviteOpen) {
+      axios
+        .post("http://localhost:4000/invite", {
+          id: ID,
+          email: email,
+          edit: allowEdit,
+        })
+        .then((response) => {
+          const data = response.data;
+          alert(data.invite);
+          handleInviteClose();
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+          } else {
+            console.log("error");
+          }
+
+          console.error("There was an error", error);
+        });
+    }
+  };
+  //for invite modal
+  const handleInvite = (id) => {
+    setInviteOpen(true);
+    setID(id);
+  };
+
   //get the tab json and convert it to html and display the note
   const tabNote = tab?.map((l) => (
-    <div
-      key={l.id}
-      hidden={value !== l.id}
-      id={`vertical-tabpanel-${l.id}`}
-      aria-labelledby={`vertical-tab-${l.id}`}
-    >
-      <Box sx={{ width: "100%" }}>
-        <Stack spacing={2}>
-          {value === l.id && (
-            <>
-              <Item>
-                <span>{HTMLParser(convertToHtml(l.note))}</span>
-                <span style={{ width: "1rem" }}>
-                  {l.pin ? <PushPinIcon /> : ""}
-                </span>
-              </Item>
-            </>
-          )}
-        </Stack>
-      </Box>
-      <EditButton handleEdit={() => handleEdit(l.id)} />
-      <InviteButton>
-        <RsvpIcon />
-      </InviteButton>
-      <DeleteButton handleDelete={() => handleDelete(l.id)} />
-      <PinButton handlePin={() => handlePin(l.id)} />
-    </div>
+    <>
+      <div
+        key={l.id}
+        hidden={value !== l.id}
+        id={`vertical-tabpanel-${l.id}`}
+        aria-labelledby={`vertical-tab-${l.id}`}
+      >
+        <Box sx={{ width: "100%" }}>
+          <Stack spacing={2}>
+            {value === l.id && (
+              <>
+                <Item>
+                  <span>{HTMLParser(convertToHtml(l.note))}</span>
+                  <span style={{ width: "1rem" }}>
+                    {l.pin ? <PushPinIcon /> : ""}
+                  </span>
+                </Item>
+              </>
+            )}
+          </Stack>
+        </Box>
+        <EditButton handleEdit={() => handleEdit(l.id)} />
+        <InviteButton handleInvite={() => handleInvite(l.id)} />
+        <DeleteButton handleDelete={() => handleDelete(l.id)} />
+        <PinButton handlePin={() => handlePin(l.id)} />
+
+        {l.inviteLink
+          ? `https://roko.mutalibb.xyz/invitedraft/${l.inviteLink[0]}`
+          : ""}
+      </div>
+    </>
   ));
 
   //when save button is cliked
@@ -209,6 +246,10 @@ export default function DashBoard() {
     setOpen(true);
   };
 
+  const handleAllowEdit = (event) => {
+    setAllowEdit(event.target.value);
+  };
+
   return (
     <>
       <Note
@@ -231,6 +272,15 @@ export default function DashBoard() {
         handleClose={handleClose}
         title={title}
         content={getTextFromEditorState(note)}
+      />
+
+      <InviteModal
+        inviteOpen={inviteOpen}
+        setAllowEdit={setAllowEdit}
+        allowEdit={allowEdit}
+        handleAllowEdit={handleAllowEdit}
+        handleInviteSubmit={handleInviteSubmit}
+        setInviteOpen={() => setInviteOpen(false)}
       />
     </>
   );

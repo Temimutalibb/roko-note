@@ -1,5 +1,4 @@
 import EditIcon from "@mui/icons-material/Edit";
-import RsvpIcon from "@mui/icons-material/Rsvp";
 import ShareIcon from "@mui/icons-material/Share";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -11,7 +10,7 @@ import Tabs from "@mui/material/Tabs";
 import "draft-js/dist/Draft.css";
 import * as React from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { BlogItButton, InviteButton, SaveButton, ShareButton } from "./buttons";
+import { BlogItButton, SaveButton, ShareButton } from "./buttons";
 import { a11yProps } from "./extras";
 
 export default function Note({
@@ -83,10 +82,7 @@ export default function Note({
 
             <CardActions>
               <SaveButton onclick={handleClick} />
-              <InviteButton>
-                <RsvpIcon />
-                invite
-              </InviteButton>
+
               <BlogItButton handleBlogIT={handleBlogIT} />
               <ShareButton
                 articleTitle={note}
