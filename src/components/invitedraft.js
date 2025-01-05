@@ -1,7 +1,6 @@
 import { Box, Button, Stack } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
-import DOMPurify from "dompurify";
 import { convertFromRaw, EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import HTMLParser from "html-react-parser";
@@ -136,9 +135,7 @@ export default function InviteDraft() {
     <div key={item.id}>
       <Box sx={{ width: "100%" }}>
         <Item style={{ justifyContent: "space-around" }}>
-          <span>
-            {HTMLParser(DOMPurify.sanitize(convertToHtml(item.note)))}
-          </span>
+          <span>{HTMLParser(convertToHtml(item.note))}</span>
           {/* Check if the invite link includes "yes" to allow editing */}
           {item.inviteLink.includes("yes") && (
             <Button onClick={() => handleEdit(item.title, item.note)}>
