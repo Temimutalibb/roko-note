@@ -7,8 +7,8 @@ import InviteDraft from "./components/invitedraft";
 import NotFound from "./components/notfound";
 //export const server = "https://rokoserver.vercel.app/";
 //for developing mode
-//export const server = "http://localhost:4000/";
-export const server = "https://rokoserver.vercel.app/";
+export const server = "http://localhost:4000/";
+//export const server = "https://rokoserver.vercel.app/";
 
 window.global = window;
 function App() {

@@ -17,6 +17,15 @@ export function UserForm({ formDisplay }) {
 
   const navigate = useNavigate();
 
+  function checkInput() {
+    if (email === "" || password === "") {
+      setMessage("Please fill in all fields");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   const handleEmailchange = (event) => {
     setEmail(event.target.value);
   };
@@ -26,6 +35,9 @@ export function UserForm({ formDisplay }) {
 
   const handleSignup = (e) => {
     e.preventDefault();
+    if (!checkInput()) {
+      return; // Stop execution if inputs are invalid
+    }
     setMessage("submiting...");
     setSubmitting(true);
     axios
@@ -50,6 +62,9 @@ export function UserForm({ formDisplay }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!checkInput()) {
+      return; // Stop execution if inputs are invalid
+    }
     setMessage("submiting...");
     setSubmitting(true);
     axios
@@ -68,6 +83,7 @@ export function UserForm({ formDisplay }) {
       .catch((error) => {
         if (error.response) {
           setMessage(error.response.data.message);
+          return;
         }
 
         setMessage("something went wrong ");
